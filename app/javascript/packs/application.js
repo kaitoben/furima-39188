@@ -4,7 +4,7 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-require("turbolinks").start()
+// ターボリンクスを削除
 require("@rails/activestorage").start()
 require("channels")
 
