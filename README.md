@@ -2,16 +2,16 @@
 
 ## usersテーブル
 
-| Column             | Type      | Option       |
-| ------------------ | --------- | ------------ |
-| nickname           | string    | null: false  |
-| email              | string    | unique: true |
-| encrypted_password | string    | null: false  |
-| family_name        | string    | null: false  |
-| first_name         | string    | null: false  |
-| family_name_kana   | string    | null: false  |
-| first_name_kana    | string    | null: false  |
-| date_of_birth      | date      | null: false  |
+| Column             | Type      | Option                   |
+| ------------------ | --------- | ------------             |
+| nickname           | string    | null: false              |
+| email              | string    | unique: true, null false |
+| encrypted_password | string    | null: false              |
+| family_name        | string    | null: false              |
+| first_name         | string    | null: false              |
+| family_name_kana   | string    | null: false              |
+| first_name_kana    | string    | null: false              |
+| date_of_birth      | date      | null: false              |
 
 - has_many :items
 - has_many :orders
@@ -25,7 +25,7 @@
 
 - belongs_to :user
 - belongs_to :item
-- has_many  :buyers
+- has_one  :buyer
 
 
 ## buyersテーブル
