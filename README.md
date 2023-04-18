@@ -23,8 +23,8 @@
 | item           | references | foreign_key: true  |
 | user           | references | foreign_key: true  |
 
-- belong_to :users
-- belong_to :items
+- belongs_to :user
+- belongs_to :item
 - has_many  :buyers
 
 
@@ -36,10 +36,10 @@
 | municipalities | string     | null: false        |
 | address        | string     | null: false        |
 | building_name  | string     |                    |
-| phone_number   | integer    | null: false        |
+| phone_number   | string     | null: false        |
 | order          | references | foreign_key: true  |
 
-- belongs_to :orders
+- belongs_to :order
 
 
 ## itemsテーブル
@@ -56,6 +56,6 @@
 | price               | integer    | null: false       |
 | user                | references | foreign_key: true |
 
-- has-one    :orders
-- belongs_to :users
+- has_one    :order
+- belongs_to :user
 
