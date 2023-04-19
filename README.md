@@ -1,24 +1,60 @@
-# README
+#　テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## usersテーブル
 
-Things you may want to cover:
+| Column             | Type      | Option                   |
+| ------------------ | --------- | ------------             |
+| nickname           | string    | null: false              |
+| email              | string    | unique: true, null false |
+| encrypted_password | string    | null: false              |
+| family_name        | string    | null: false              |
+| first_name         | string    | null: false              |
+| family_name_kana   | string    | null: false              |
+| first_name_kana    | string    | null: false              |
+| date_of_birth      | date      | null: false              |
 
-* Ruby version
+- has_many :items
+- has_many :orders
 
-* System dependencies
 
-* Configuration
+## ordersテーブル
+| Column         | Type       | Option             |
+| -------------- | ---------- | ------------------ |
+| item           | references | foreign_key: true  |
+| user           | references | foreign_key: true  |
 
-* Database creation
+- belongs_to :user
+- belongs_to :item
+- has_one  :buyer
 
-* Database initialization
 
-* How to run the test suite
+## buyersテーブル
+| Column         | Type       | Option             |
+| -------------- | ---------- | ------------------ |
+| post_code      | string     | null: false        | 
+| sender_id      | integer    | null: false        |
+| municipalities | string     | null: false        |
+| address        | string     | null: false        |
+| building_name  | string     |                    |
+| phone_number   | string     | null: false        |
+| order          | references | foreign_key: true  |
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :order
 
-* Deployment instructions
 
-* ...
+## itemsテーブル
+
+| Column              | Type       | Option            |
+| ------------------- | ---------- | ----------------- |
+| item_name           | string     | null: false       |
+| explanation         | text       | null: false       |
+| category_id         | integer    | null: false       |
+| status_id           | integer    | null: false       |
+| shipping_charges_id | integer    | null: false       |
+| sender_id           | integer    | null: false       |
+| days_to_ship_id     | integer    | null: false       |
+| price               | integer    | null: false       |
+| user                | references | foreign_key: true |
+
+- has_one    :order
+- belongs_to :user
