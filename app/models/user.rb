@@ -4,27 +4,29 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-
+# ニックネームは入力必須である
   validates :nickname, presence: true
 
-  with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/, message: 'に全角文字を使用してください' } do
-  validates :family_name
-  validates :first_name
-  end
-
-  with_options presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: 'に全角カタカナを使用してください' } do 
-  validates :family_name_kana
-  validates :first_name_kana
-  end
-
   
+# パスワードは半角英数字混合でなければいけない
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
   validates :password, format: { with: VALID_PASSWORD_REGEX }
 
 
+# 苗字と名前は必須で全角文字を使用する必要がある
+  with_options presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/, message: 'に全角文字を使用してください' } do
+    validates :family_name
+    validates :first_name
+    end
+ 
+# 苗字と名前のカナは必須で全角カタカナで入力する必要がある    
+    with_options presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: 'に全角カタカナを使用してください' } do 
+    validates :family_name_kana
+    validates :first_name_kana
+    end
 
-  validates :date_of_birth, presence: true
-
+# 誕生日は入力必須である    
+    validates :date_of_birth, presence: true
 
 
 end
