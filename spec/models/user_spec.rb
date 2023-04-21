@@ -5,11 +5,15 @@ RSpec.describe User, type: :model do
   end
   
 
-  describe 'ユーザー新規登録' do
-
-    it 'すべて存在すれば登録できる' do
-      expect(@user).to be_valid
-    end
+ describe 'ユーザー新規登録' do
+  context '新規登録できるとき' do
+     
+      it 'すべて存在すれば登録できる' do
+        expect(@user).to be_valid
+       end
+  end
+    
+  context '新規登録できないとき' do
 
     it 'nicknameが空では登録できない' do
       @user.nickname = ''
@@ -50,10 +54,24 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
     end
 
-    it 'パスワードは半角英数字混合の入力が必須' do
+    it '数字のみのパスワードでは登録できない' do
       @user.password = '1234567'
       @user.valid?
+      expect(@user.errors.full_messages).to include("Password は半角で英字と数字の両方を含めて設定してください")
     end
+
+    it '英字のみのパスワードでは登録できない' do
+      @user.password = 'abcdefg'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password は半角で英字と数字の両方を含めて設定してください")
+    end
+
+    it '全角文字を含むパスワードは登録できない' do
+      @user.password = 'abcあ1234'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password は半角で英字と数字の両方を含めて設定してください")
+    end
+
 
     it 'パスワードとその確認の値は一致している必要がある' do
       @user.password = '123456'
@@ -87,22 +105,83 @@ RSpec.describe User, type: :model do
     end
 
 
-    it 'お名前の入力は全角での入力が必須である' do
-      @user.first_name = 'aaaaaa'
+    it '性の入力は全角での入力が必須である' do
+      @user.family_name = 'あああaaaあああ'
       @user.valid?
-      expect(@user.errors.full_messages).to include("First name に全角文字を使用してください")
+      expect(@user.errors.full_messages).to include("Family name には全角文字を使用してください")
+    end
+
+    it '名の入力は全角での入力が必須である' do
+      @user.first_name = 'あああaaaあああ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name には全角文字を使用してください")
     end
 
 
-    it 'お名前(カナ)は全角カタカナの入力が必須である' do
+    it '性(カナ)にに平仮名が含まれていると登録できない' do
+      @user.family_name_kana = 'あいうアイウ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Family name kana には全角カタカナを使用してください")
+    end
+
+    it '性(カナ)に漢字が含まれていると登録できない' do
+      @user.family_name_kana = '阿意得アイウ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Family name kana には全角カタカナを使用してください")
+    end
+
+    it '性(カナ)にに英字が含まれていると登録できない' do
+      @user.family_name_kana = 'aaaaaa'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Family name kana には全角カタカナを使用してください")
+    end
+
+    it '性(カナ)にに数字が含まれていると登録できない' do
+      @user.family_name_kana = '12345'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Family name kana には全角カタカナを使用してください")
+    end
+    it '性(カナ)に記号が含まれていると登録できない' do
+      @user.family_name_kana = 'アイウ＠＄％'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Family name kana には全角カタカナを使用してください")
+    end
+
+    it '名(カナ)にに平仮名が含まれていると登録できない' do
+      @user.first_name_kana = 'あいうアイウ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name kana には全角カタカナを使用してください")
+    end
+
+    it '名(カナ)に漢字が含まれていると登録できない' do
+      @user.first_name_kana = '阿意得アイウ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name kana には全角カタカナを使用してください")
+    end
+
+    it '名(カナ)にに英字が含まれていると登録できない' do
       @user.first_name_kana = 'aaaaaa'
       @user.valid?
-      expect(@user.errors.full_messages).to include("First name kana に全角カタカナを使用してください")
-
+      expect(@user.errors.full_messages).to include("First name kana には全角カタカナを使用してください")
     end
 
+    it '名(カナ)にに数字が含まれていると登録できない' do
+      @user.first_name_kana = '12345'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name kana には全角カタカナを使用してください")
+    end
+    it '名(カナ)に記号が含まれていると登録できない' do
+      @user.first_name_kana = 'アイウ＠＄％'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name kana には全角カタカナを使用してください")
+    end
 
-
-
+    it '誕生日の入力は必須である' do
+      @user.date_of_birth = ''
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Date of birth can't be blank")
+    end
   end
+
+ end
 end
