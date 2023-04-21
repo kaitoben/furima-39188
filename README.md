@@ -58,4 +58,3 @@
 
 - has_one    :order
 - belongs_to :user
-
