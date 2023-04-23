@@ -28,6 +28,9 @@ class User < ApplicationRecord
 
 # 誕生日は入力必須である    
     validates :date_of_birth, presence: true
+    
+
+has_many :items
 
 
 end
