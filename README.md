@@ -50,9 +50,9 @@
 | explanation         | text       | null: false       |
 | category_id         | integer    | null: false       |
 | status_id           | integer    | null: false       |
-| shipping_charges_id | integer    | null: false       |
+| shipping_charge _id | integer    | null: false       |
 | sender_id           | integer    | null: false       |
-| days_to_ship_id     | integer    | null: false       |
+| day_to_ship_id      | integer    | null: false       |
 | price               | integer    | null: false       |
 | user                | references | foreign_key: true |
 
