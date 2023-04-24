@@ -16,8 +16,8 @@ validates :explanation, presence: true
 validates :price, presence: true
 
 # 価格は半角数値で300円以上、9999999円以下でなければ登録できない
-validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 },
-                  format: { with: /\A[0-9]+\z/ }
+validates :price, numericality: {only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
+                  
 
 
 extend ActiveHash::Associations::ActiveRecordExtensions

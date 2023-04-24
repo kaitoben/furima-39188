@@ -35,32 +35,42 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include ("Explanation can't be blank")
       end
 
-      it 'カテゴリーが空では登録できない' do
-        @item.category_id = ''
+
+
+      it 'カテゴリーに「---」が選択されている場合は出品できない' do
+        @item.category_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include ("Category can't be blank")
       end
 
-      it '商品の状態が空では登録できない' do
-        @item.status_id = ''
+
+
+      it '商品の状態に「---」が選択されている場合は出品できない' do
+        @item.status_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include ("Status can't be blank")
       end
 
-      it '配送料の負担が空では登録できない' do
-        @item.shipping_charge_id = ''
+
+
+      it '配送料の負担に「---」が選択されている場合は出品できない' do
+        @item.shipping_charge_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include ("Shipping charge can't be blank")
       end
 
-      it '配送元の地域が空では登録できない' do
-        @item.sender_id = ''
+
+
+      it '配送元の地域に「---」が選択されている場合は出品できない' do
+        @item.sender_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include ("Sender can't be blank")
       end
       
-      it '発送までの日数が空では登録できない' do
-        @item.day_to_ship_id = ''
+
+
+      it '配送元の地域に「---」が選択されている場合は出品できない' do
+        @item.day_to_ship_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include ("Day to ship can't be blank")
       end  
@@ -85,6 +95,30 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include ("Price must be less than or equal to 9999999")
       end
 
+      it "価格が半角英字では出品できない" do
+        @item.price = "aaaaaaa"
+        @item.valid?
+        expect(@item.errors.full_messages).to include ("Price is not a number")
+      end
+
+      it "価格が全角数字では出品できない" do
+        @item.price = "４００"
+        @item.valid?
+        expect(@item.errors.full_messages).to include ("Price is not a number")
+      end
+
+      it "価格が半角英数字混合では出品できない" do
+        @item.price = "aaaa1111"
+        @item.valid?
+        expect(@item.errors.full_messages).to include ("Price is not a number")
+      end
+
+      it "userが紐付いていなければ出品できない" do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include ("User must exist")
+      end
+      
     end
   end
 end
