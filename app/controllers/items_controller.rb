@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
  before_action :set_item, only: [:edit,:update, :show]
- before_action :move_to_session, only: [:new, :edit]  
+ before_action :move_to_session, only: [:new, :edit, :destroy]  
  before_action :move_to_index, only: [:edit, :destroy]
 
 def index
