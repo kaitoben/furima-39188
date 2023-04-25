@@ -45,6 +45,14 @@ def show
 
 end
 
+def destroy
+  item = Item.find(params[:id])
+  item.destroy   
+  if item.destroy
+    redirect_to root_path
+  end
+end
+
 private
 
 def item_params
