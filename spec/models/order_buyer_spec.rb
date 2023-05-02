@@ -15,6 +15,11 @@ RSpec.describe OrderBuyer, type: :model do
       it 'すべて存在すれば購入できる' do
         expect(@order_buyer).to be_valid
        end
+
+      it '建物名が空でも購入できる' do
+        @order_buyer.building_name = ''
+        expect(@order_buyer).to be_valid
+      end
     end
 
 

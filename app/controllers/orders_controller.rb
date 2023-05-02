@@ -1,10 +1,8 @@
 class OrdersController < ApplicationController
-  
-  before_action :move_to_session, only: [:index] 
-
+  before_action :set_order, only: [:index,:create ]
+  before_action :authenticate_user!, only: [:index] 
 
   def index
-    @item = Item.find(params[:item_id])
     @order_buyer = OrderBuyer.new 
     if current_user.id  == @item.user_id || @item.order.present?
     redirect_to root_path
@@ -14,7 +12,6 @@ class OrdersController < ApplicationController
 
 
   def create
-    @item = Item.find(params[:item_id])
     @order_buyer = OrderBuyer.new(order_params)
     if @order_buyer.valid?
       pay_item
@@ -43,12 +40,9 @@ class OrdersController < ApplicationController
     )
   end
 
-  def move_to_session
-    unless user_signed_in? 
-     redirect_to new_user_session_path
-    end
+  def set_order
+    @item = Item.find(params[:item_id])
   end
-
 
 
 end
