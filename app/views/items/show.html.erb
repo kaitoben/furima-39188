@@ -9,13 +9,13 @@
     <div class="item-img-content">
       <%= image_tag @item.image ,class:"item-box-img" %>
 
-      <!-- 商品購入機能を実装後に編集する ---------------------------------------------------->
-      <%# 商品が売れている場合は、sold outを表示しましょう %>
-      <div class="sold-out">
+
+      <% if @item.order.present? %> 
+      <div class='sold-out'>
         <span>Sold Out!!</span>
-      </div>
-      <%# //商品が売れている場合は、sold outを表示しましょう %>
-      <!-- 商品購入機能を実装後に編集する ----------------------------------------------------->
+      </div>   
+      <% end %> 
+
     </div>
     <div class="item-price-box">
       <span class="item-price">
@@ -26,20 +26,23 @@
       </span>
     </div>
 
-   <!-- 商品購入機能を実装後に編集する ----------------------------------------------------->
-
+   
+   <% unless @item.order.present? %> 
     <% if user_signed_in? && current_user.id == @item.user_id %>
     <%= link_to "商品の編集",edit_item_path, method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
     <%= link_to "削除", "#", method: :delete, class:"item-destroy" %>
     <% end %>
-    <%# 商品が売れていない場合はこちらを表示しましょう %>
-    <% if user_signed_in? && current_user.id != @item.user_id %>
-    <%= link_to "購入画面に進む", item_orders_path ,class:"item-red-btn"%>
-    <% end %>
-    <%# //商品が売れていない場合はこちらを表示しましょう %>
 
-    <!-- 商品購入機能を実装後に編集する ------------------------------------------------------>
+    <% if user_signed_in? && current_user.id != @item.user_id %>
+    <%= link_to "購入画面に進む", item_orders_path(@item.id) ,class:"item-red-btn"%>
+    <% end %>
+    <% end %>
+    
+
+   
+
+  
 
     
   

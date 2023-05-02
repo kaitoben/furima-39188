@@ -1,6 +1,6 @@
 class OrderBuyer
   include ActiveModel::Model
-  attr_accessor :post_code, :sender_id, :municipalities, :address :building_name, :phone_number, :item_id,  :user_id
+  attr_accessor :post_code, :sender_id, :municipalities, :address, :building_name, :phone_number, :item_id,  :user_id, :token
 
 
   with_options presence: true do
@@ -12,20 +12,19 @@ class OrderBuyer
     validates :item_id
   end
 
+  validates :token, presence: true
 
-  extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :sender
   validates :sender_id, numericality: {  other_than: 1 , message: "can't be blank" } 
 
 
   # ここではdonationはorder  addressはbuyer
 
   def save
-    # 寄付情報を保存し、変数donationに代入する
+    # 商品購入情報を保存し、変数orderに代入する
     order = Order.create(item_id: item_id, user_id: user_id)
     # 住所を保存する
     # donation_idには、変数donationのidと指定する
-    Buyer.create(post_code: post_code, sender_id: sender_id, municipalities: municipalities, adrress: adrress, building_name: building_name, phone_number: phone_number, order_id: order.id )
+    Buyer.create(post_code: post_code, sender_id: sender_id, municipalities: municipalities, address: address, building_name: building_name, phone_number: phone_number, order_id: order.id )
   end
 
 end
