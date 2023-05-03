@@ -4,17 +4,17 @@ class OrderBuyer
 
 
   with_options presence: true do
-    validates :post_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
+    validates :post_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "の入力が正しくありません。ハイフン(-)を入れてください"}
     validates :municipalities
     validates :address
-    validates :phone_number, format: {with: /\A\d{10}\z|\A\d{11}\z/ , message: "is invalid."}
+    validates :phone_number, format: {with: /\A\d{10}\z|\A\d{11}\z/ , message: "の入力が正しくありません。"}
     validates :user_id
     validates :item_id
   end
 
   validates :token, presence: true
 
-  validates :sender_id, numericality: {  other_than: 1 , message: "can't be blank" } 
+  validates :sender_id, numericality: {  other_than: 1 , message: "を入力してください" } 
 
 
   # ここではdonationはorder  addressはbuyer

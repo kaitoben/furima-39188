@@ -29,11 +29,11 @@ belongs_to :sender
 belongs_to :day_to_ship
 
 # idが1、すなわち空欄では登録できない
-validates :category_id, numericality: {  other_than: 1 , message: "can't be blank" } 
-validates :status_id, numericality: {  other_than: 1 , message: "can't be blank" } 
-validates :shipping_charge_id, numericality: {  other_than: 1 , message: "can't be blank" } 
-validates :sender_id, numericality: {  other_than: 1 , message: "can't be blank" } 
-validates :day_to_ship_id, numericality: {  other_than: 1 , message: "can't be blank" } 
+validates :category_id, numericality: {  other_than: 1 , message: "を入力してください" } 
+validates :status_id, numericality: {  other_than: 1 , message: "を入力してください" } 
+validates :shipping_charge_id, numericality: {  other_than: 1 , message: "を入力してください" } 
+validates :sender_id, numericality: {  other_than: 1 , message: "を入力してください" } 
+validates :day_to_ship_id, numericality: {  other_than: 1 , message: "を入力してください" } 
 
 
 end
